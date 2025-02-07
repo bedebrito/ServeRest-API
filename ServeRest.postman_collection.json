@@ -1,0 +1,746 @@
+{
+	"info": {
+		"_postman_id": "06938781-d35e-4898-86ca-eef9ade7e4a7",
+		"name": "ServeRest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14868555"
+	},
+	"item": [
+		{
+			"name": "Geração de massa",
+			"item": [
+				{
+					"name": "Buscar nova pessoa",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validar schema\", function () {\r",
+									"    pm.response.to.have.jsonSchema(pm.globals.get(\"randomUser_schema\")); \r",
+									"})\r",
+									"\r",
+									"var firstName = pm.response.json().results[0].name.first;\r",
+									"var lastName = pm.response.json().results[0].name.last;\r",
+									"var fullName = firstName + \" \" + lastName;\r",
+									"\r",
+									"// capturar nome\r",
+									"pm.test('Capturar nome completo do usuário', function () {\r",
+									"    pm.globals.set(\"userFullName\", fullName);\r",
+									"});\r",
+									"// capturar email\r",
+									"pm.test('Capturar email', function () {\r",
+									"    pm.globals.set(\"userEmail\", pm.response.json().results[0].email);\r",
+									"});\r",
+									"// capturar senha\r",
+									"pm.test('Capturar senha', function () {\r",
+									"    pm.globals.set(\"userPassword\", pm.response.json().results[0].login.password);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.globals.unset(\"randomUser_schema\");\r",
+									"\r",
+									"pm.globals.set(\"randomUser_schema\", {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r",
+									"  \"title\": \"Generated schema for Root\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"results\": {\r",
+									"      \"type\": \"array\",\r",
+									"      \"items\": {\r",
+									"        \"type\": \"object\",\r",
+									"        \"properties\": {\r",
+									"          \"name\": {\r",
+									"            \"type\": \"object\",\r",
+									"            \"properties\": {\r",
+									"              \"title\": {\r",
+									"                \"type\": \"string\"\r",
+									"              },\r",
+									"              \"first\": {\r",
+									"                \"type\": \"string\"\r",
+									"              },\r",
+									"              \"last\": {\r",
+									"                \"type\": \"string\"\r",
+									"              }\r",
+									"            },\r",
+									"            \"required\": [\r",
+									"              \"title\",\r",
+									"              \"first\",\r",
+									"              \"last\"\r",
+									"            ]\r",
+									"          },\r",
+									"          \"email\": {\r",
+									"            \"type\": \"string\"\r",
+									"          },\r",
+									"          \"login\": {\r",
+									"            \"type\": \"object\",\r",
+									"            \"properties\": {\r",
+									"              \"uuid\": {\r",
+									"                \"type\": \"string\"\r",
+									"              },\r",
+									"              \"username\": {\r",
+									"                \"type\": \"string\"\r",
+									"              },\r",
+									"              \"password\": {\r",
+									"                \"type\": \"string\"\r",
+									"              },\r",
+									"              \"salt\": {\r",
+									"                \"type\": \"string\"\r",
+									"              },\r",
+									"              \"md5\": {\r",
+									"                \"type\": \"string\"\r",
+									"              },\r",
+									"              \"sha1\": {\r",
+									"                \"type\": \"string\"\r",
+									"              },\r",
+									"              \"sha256\": {\r",
+									"                \"type\": \"string\"\r",
+									"              }\r",
+									"            },\r",
+									"            \"required\": [\r",
+									"              \"uuid\",\r",
+									"              \"username\",\r",
+									"              \"password\",\r",
+									"              \"salt\",\r",
+									"              \"md5\",\r",
+									"              \"sha1\",\r",
+									"              \"sha256\"\r",
+									"            ]\r",
+									"          }\r",
+									"        },\r",
+									"        \"required\": [\r",
+									"          \"name\",\r",
+									"          \"email\",\r",
+									"          \"login\"\r",
+									"        ]\r",
+									"      }\r",
+									"    },\r",
+									"    \"info\": {\r",
+									"      \"type\": \"object\",\r",
+									"      \"properties\": {\r",
+									"        \"seed\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"results\": {\r",
+									"          \"type\": \"number\"\r",
+									"        },\r",
+									"        \"page\": {\r",
+									"          \"type\": \"number\"\r",
+									"        },\r",
+									"        \"version\": {\r",
+									"          \"type\": \"string\"\r",
+									"        }\r",
+									"      },\r",
+									"      \"required\": [\r",
+									"        \"seed\",\r",
+									"        \"results\",\r",
+									"        \"page\",\r",
+									"        \"version\"\r",
+									"      ]\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"results\",\r",
+									"    \"info\"\r",
+									"  ]\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://randomuser.me/api/?inc=name,email,login",
+							"protocol": "https",
+							"host": [
+								"randomuser",
+								"me"
+							],
+							"path": [
+								"api",
+								""
+							],
+							"query": [
+								{
+									"key": "inc",
+									"value": "name,email,login"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuários",
+			"item": [
+				{
+					"name": "Listar usuários cadastrados",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/usuarios",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cadastrar usuário",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validar schema\", function () {\r",
+									"    pm.response.to.have.jsonSchema(pm.globals.get(\"message_ID_schema\")); \r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validar mensagem\", function() {\r",
+									"    pm.expect(pm.response.json().message).to.eql(\"Cadastro realizado com sucesso\");\r",
+									"});\r",
+									"\r",
+									"pm.test('Capturar id', function () {\r",
+									"    pm.globals.set(\"userID\", pm.response.json()._id)\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.globals.unset(\"message_ID_schema\");\r",
+									"\r",
+									"pm.globals.set(\"message_ID_schema\", {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r",
+									"  \"title\": \"Generated schema for Root\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"message\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"_id\": {\r",
+									"      \"type\": \"string\"\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"message\",\r",
+									"    \"_id\"\r",
+									"  ] \r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"{{userFullName}}\",\r\n  \"email\": \"{{userEmail}}\",\r\n  \"password\": \"{{userPassword}}\",\r\n  \"administrador\": \"false\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/usuarios",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar usuário por id",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.globals.unset(\"buscarUsuario_schema\");\r",
+									"\r",
+									"pm.globals.set(\"buscarUsuario_schema\", {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r",
+									"  \"title\": \"Generated schema for Root\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"nome\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"email\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"password\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"administrador\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"_id\": {\r",
+									"      \"type\": \"string\"\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"nome\",\r",
+									"    \"email\",\r",
+									"    \"password\",\r",
+									"    \"administrador\",\r",
+									"    \"_id\"\r",
+									"  ]\r",
+									"} );\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validar schema\", function () {\r",
+									"    pm.response.to.have.jsonSchema(pm.globals.get(\"buscarUsuario_schema\")); \r",
+									"})\r",
+									"\r",
+									"//validar se o id retornado foi o solicitado\r",
+									"pm.test(\"Validar o id retornado\", function () {\r",
+									"    pm.expect(pm.response.json()._id).to.eql(pm.globals.get(\"userID\"));\r",
+									"})\r",
+									"//validar o email\r",
+									"pm.test(\"Validar o email\", function () {\r",
+									"    pm.expect(pm.response.json().email).to.eql(pm.globals.get(\"userEmail\"));\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/usuarios/{{userID}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"usuarios",
+								"{{userID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fazer login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{userEmail}}\",\r\n  \"password\": \"{{userPassword}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/login",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar usuário com id inválida",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.globals.unset(\"message_schema\");\r",
+									"\r",
+									"pm.globals.set(\"message_schema\", {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r",
+									"  \"title\": \"Generated schema for Root\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"message\": {\r",
+									"      \"type\": \"string\"\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"message\"\r",
+									"  ] \r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validar schema\", function () {\r",
+									"    pm.response.to.have.jsonSchema(pm.globals.get(\"message_schema\")); \r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validar mensagem\", function() {\r",
+									"    pm.expect(pm.response.json().message).to.eql(\"Usuário não encontrado\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/usuarios/123",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"usuarios",
+								"123"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar usuário",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validar mensagem\", function() {\r",
+									"    pm.expect(pm.response.json().message).to.eql(\"Registro alterado com sucesso\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"{{userFullName}}\",\r\n  \"email\": \"{{userEmail}}\",\r\n  \"password\": \"{{userPassword}}\",\r\n  \"administrador\": \"true\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/usuarios/{{userID}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"usuarios",
+								"{{userID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar usuário atualizado",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validar o parametro administrator\", function () {\r",
+									"    pm.expect(pm.response.json().administrador).to.eql(\"true\");\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {
+									"@team-1-1953/tests_package": {
+										"id": "0194d752-7fd5-76e0-a4ef-cc6409effa38"
+									}
+								}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/usuarios/{{userID}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"usuarios",
+								"{{userID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excluir usuário",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.globals.unset(\"message_schema\");\r",
+									"\r",
+									"pm.globals.set(\"message_schema\", {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r",
+									"  \"title\": \"Generated schema for Root\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"message\": {\r",
+									"      \"type\": \"string\"\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"message\"\r",
+									"  ] \r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validar schema\", function () {\r",
+									"    pm.response.to.have.jsonSchema(pm.globals.get(\"message_schema\")); \r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validar mensagem\", function() {\r",
+									"    pm.expect(pm.response.json().message).to.satisfy((message)=>{ \r",
+									"       if(message === \"Registro excluído com sucesso\" || message === \"Nenhum registro excluído\") {\r",
+									"        return true;\r",
+									"       }\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/usuarios/{{userID}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"usuarios",
+								"{{userID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "validateSchema",
+			"value": "\"const validateSchema = (schema) => {\n    pm.test(\"Validar schema\", function () {\n        pm.response.to.have.jsonSchema(schema); \n    })\n}\"",
+			"type": "string"
+		}
+	]
+}
